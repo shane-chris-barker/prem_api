@@ -40,7 +40,7 @@ final class SeasonFactory extends ModelFactory
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'year' => self::faker()->text(),
-            'current' => self::faker()->boolean(),
+            'isCurrent' => self::faker()->boolean(),
         ];
     }
 

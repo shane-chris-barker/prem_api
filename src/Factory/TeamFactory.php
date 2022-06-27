@@ -39,9 +39,9 @@ final class TeamFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'name' => self::faker()->text(),
-            'founded_at' => self::faker()->datetime(),
-            'nickname' => self::faker()->text(),
+            'name' => self::faker()->city().' FC',
+            'founded_at' => self::faker()->dateTimeBetween('-50 years', '-1 year'),
+            'nickname' => self::faker()->name(),
         ];
     }
 

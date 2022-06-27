@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\PlayerFactory;
 use App\Factory\SeasonFactory;
 use App\Factory\TeamFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,42 +12,34 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $teams = [
-            0 => [
-                'name'      => 'Newcastle United FC',
-                'nickname'  => 'The Magpies',
-                'foundedAt' => new \DateTime('09-12-1982')
-            ],
-            1 => [
-                'name' => 'Manchester City',
-                'nickname' => 'The Citizens',
-                'foundedAt' => new \DateTime('1880')
-            ]
-        ];
+
+        // Create 10 teams
+        $teams = TeamFactory::createMany(10);
 
         $seasons = [
             0 => [
                 'year'      => '21/22',
-                'current'   => false
+                'isCurrent' => false
             ],
             1 => [
                 'year'      => '22/23',
-                'current'   => true
+                'isCurrent'   => true
             ]
         ];
 
+        // create 11 players and assign to the 10 teams
         foreach ($teams as $team) {
-            TeamFactory::createOne([
-                'name'      => $team['name'],
-                'nickname'  => $team['nickname'],
-                'foundedAt' => $team['foundedAt']
-            ]);
+            PlayerFactory::new()->createMany(11, function() use ($team) {
+                return [
+                    'team' => $team
+                ];
+            });
         }
 
         foreach ($seasons as $season) {
             SeasonFactory::createOne([
                 'year'      => $season['year'],
-                'current'   => $season['current']
+                'isCurrent' => $season['isCurrent']
             ]);
         }
 
